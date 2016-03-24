@@ -1,45 +1,85 @@
-var stack = [];
+var app = (function() {
 
-// push: Pushes the value of the colour block just exited on to the stack.
-// Note that values of colour blocks are not automatically pushed on to the stack - this push operation must be explicitly carried out.
-// Hue: +0, Lightness: +1
-var push = function() {
-    // TODO: limit to numeric
-    var n = parseInt(document.getElementById("input").value);
-    stack.push(n);
+    var self = this;
 
-}
+    var itpr = interpreter;
+    var input = document.getElementById("input");
+    var stackView = document.getElementById("stackView");
+    var commandView = document.getElementById("commandView");
+    var output = document.getElementById("output");
 
-// pop: Pops the top value off the stack and discards it.
-// Hue: +0, Lightness: +2
-var pop = function() {
-    var top = stack[0];
-    stack.pop();
-    return top;
-}
+    itpr.start();
 
-// add: Pops the top two values off the stack, adds them, and pushes the result back on the stack.
-// Hue: +1, Lightness: +0
-var add = function() {
-    var a = pop();
-    var b = pop();
-    stack.push(a + b);
-}
+    //dasdasd
+    input.focus();
 
-// subtract: Pops the top two values off the stack, calculates the second top value minus the top value, and pushes the result back on the stack.
-// Hue: +1, Lightness: +1
-var subtract = function() {
-    var a = pop();
-    var b = pop();
-    stack.push(b - a);
-}
+    function action(type) {
+        var n = parseInt(self.input.value);
 
-var printStack = function() {
-    // TODO: replace with Anglular bindings
-    var stackText = "";
-    for (var i = stack.length - 1; i > -1; i--)
-    {
-        stackText += i + ": " stack[i] + "\n";
+        switch (type) {
+            case "start":
+                itpr.start();
+                break;
+            case "push":
+                itpr.push(n);
+                break;
+            case "pop":
+                itpr.pop();
+                break;
+            case "add":
+                itpr.add();
+                break;
+            case "subtract":
+                itpr.subtract();
+                break;
+            case "multiply":
+                itpr.multiply();
+                break;
+            case "divide":
+                itpr.divide();
+                break;
+            case "outN":
+                STDOUT(itpr.outN());
+                break;
+            case "outC":
+                STDOUT(itpr.outC());
+                break;
+            default:
+                break;
+        }
+        printStack();
+        printCommandChain();
+
+        self.input.focus();
+        self.input.value = "";
+    };
+
+    function printStack() {
+        var stackText = "";
+        var stack = itpr.stack();
+        for (var i = stack.length - 1; i > -1; i--)
+        {
+            stackText += i + ": " + stack[i] + "\n";
+        }
+        self.stackView.innerText = stackText;
+    };
+
+    function printCommandChain() {
+        var commandChainText = "";
+        var commandChain = itpr.commandChain();
+        for (var i = commandChain.length - 1; i > -1; i--)
+        {
+            commandChainText += i + ": " + commandChain[i] + "\n";
+        }
+        self.commandView.innerText = commandChainText;
+    };
+
+    function STDOUT(value) {
+        self.output.value += value;
     }
-    document.getElementById("stackView").innerText = stackText;
-}
+
+    return {
+        action: action
+    };
+
+})();

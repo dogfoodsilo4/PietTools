@@ -1,16 +1,42 @@
 <html>
     <head>
         <title>Piet Tools</title>
-        <script src="scripts/app.js"></script>
+        <link type="text/css" href="css/style.css" rel="stylesheet"></link>
     </head>
     <body>
-        <input type="textbox" id="input" value=8 />
         <div>
-            <input type="button" value="push" onclick="push(); printStack();" />
-            <input type="button" value="pop" onclick="pop(); printStack();" />
-            <input type="button" value="add" onclick="add(); printStack();" />
-            <input type="button" value="subtract" onclick="subtract(); printStack();" />
+            input: <input type="textbox" id="input" />
         </div>
-        <div id="stackView"></div>
+        <div>
+            <input type="button" value="push" onclick="app.action('push');" />
+            <input type="button" value="pop" onclick="app.action('pop');" />
+            <br/>
+            <input type="button" value="add" onclick="app.action('add');" />
+            <input type="button" value="subtract" onclick="app.action('subtract');" />
+            <input type="button" value="multiply" onclick="app.action('multiply');" />
+            <input type="button" value="divide" onclick="app.action('divide');" />
+            <br/>
+            <input type="button" value="outN" onclick="app.action('outN');" />
+            <input type="button" value="outC" onclick="app.action('outC');" />
+        </div>
+        <div>
+            output: <input type="textbox" id="output" value="" />
+        </div>
+        <div>
+            <input type="button" value="start again" onclick="app.action('start');" />
+        </div>
+        <div class="container">
+            <div class="col">
+                stack
+                <div id="stackView"></div>
+            </div>
+            <div class="col">
+                commands
+                <div id="commandView"></div>
+            </div>
+        </div>
     </body>
+
+    <script src="scripts/interpreter.js"></script>
+    <script src="scripts/app.js"></script>
 </html>

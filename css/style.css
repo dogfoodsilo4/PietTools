@@ -1,0 +1,21 @@
+body {
+    margin: 10;
+}
+
+div {
+    padding-bottom: 10;
+}
+
+input[type=button] {
+    margin-bottom: 2;
+    width: 80;
+}
+
+.container {
+    width: 400px;
+}
+
+.col {
+    float: left;
+    width: 50%;"
+}
