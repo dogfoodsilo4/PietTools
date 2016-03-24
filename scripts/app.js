@@ -13,12 +13,13 @@ var app = (function() {
     //dasdasd
     input.focus();
 
-    function action(type) {
+    function command(type) {
         var n = parseInt(self.input.value);
 
         switch (type) {
             case "start":
                 itpr.start();
+                output.value = "";
                 break;
             case "push":
                 itpr.push(n);
@@ -79,7 +80,7 @@ var app = (function() {
     }
 
     return {
-        action: action
+        action: command
     };
 
 })();

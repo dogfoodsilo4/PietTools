@@ -5,10 +5,9 @@
     </head>
     <body>
         <div>
-            input: <input type="textbox" id="input" />
-        </div>
-        <div>
             <input type="button" value="push" onclick="app.action('push');" />
+            <input type="textbox" id="input" />
+            <br/>
             <input type="button" value="pop" onclick="app.action('pop');" />
             <br/>
             <input type="button" value="add" onclick="app.action('add');" />
@@ -20,18 +19,19 @@
             <input type="button" value="outC" onclick="app.action('outC');" />
         </div>
         <div>
-            output: <input type="textbox" id="output" value="" />
+            STDOUT: <br/>
+            <textarea class="console" id="output" readonly rows="6" cols="50"></textarea>
         </div>
         <div>
             <input type="button" value="start again" onclick="app.action('start');" />
         </div>
         <div class="container">
-            <div class="col">
-                stack
+            <div class="col twenty">
+                Stack:
                 <div id="stackView"></div>
             </div>
-            <div class="col">
-                commands
+            <div class="col eighty">
+                Command Chain:
                 <div id="commandView"></div>
             </div>
         </div>
