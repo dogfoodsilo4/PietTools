@@ -1,10 +1,7 @@
 body {
-    margin: 10;
-}
-
-div {
-    padding-bottom: 10;
-    clear: both;
+  margin: 0;
+  font-family: monospace;
+  background-color: White;
 }
 
 input[type=button] {
@@ -12,21 +9,53 @@ input[type=button] {
     width: 80;
 }
 
-.container {
-    width: 400px;
-    height: 400px;
+
+.header {
+  width: 100%;
+  background-color: #20293F;
+  color: white;
+  padding: 1 10 1 10;
 }
 
-.col {
-    float: left;
-    clear: none;
-    height: 100%;
+.footer {
+  width: 100%;
+  font-size: xx-small;
+  background-color: #404749;
+  color: #030C22;
+  padding: 20;
+  clear: both;
+}
+
+.main {
+  width: 100%;
+
+}
+
+.container {
+  clear: none;
+  padding: 10px;
+  min-height: 500;
+}
+
+.builder {
+  float: left;
+  background-color: #A9B0B3;
+  width: 400;
+}
+
+.editor {
+  float: left;
+}
+
+.commandChain {
+  float: right;
+  background-color: #A9B0B3;
+  width: 200;
+}
+
+.column {
     overflow-y: auto;
     padding-right: 10;
-}
-
-.twenty {
-    width: 20%;"
 }
 
 .console {

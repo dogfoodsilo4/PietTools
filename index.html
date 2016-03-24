@@ -4,39 +4,58 @@
         <link type="text/css" href="css/style.css" rel="stylesheet"></link>
     </head>
     <body>
-        <div>
-            <input type="button" value="push" onclick="app.action('push');" />
-            <input type="textbox" id="input" />
-            <br/>
-            <input type="button" value="pop" onclick="app.action('pop');" />
-            <br/>
-            <input type="button" value="add" onclick="app.action('add');" />
-            <input type="button" value="subtract" onclick="app.action('subtract');" />
-            <input type="button" value="multiply" onclick="app.action('multiply');" />
-            <input type="button" value="divide" onclick="app.action('divide');" />
-            <br/>
-            <input type="button" value="outN" onclick="app.action('outN');" />
-            <input type="button" value="outC" onclick="app.action('outC');" />
+
+        <div class="header">
+          <h3>Piet Tools</h3>
         </div>
-        <div>
-            STDOUT: <br/>
-            <textarea class="console" id="output" readonly rows="6" cols="50"></textarea>
-        </div>
-        <div>
-            <input type="button" value="start again" onclick="app.action('start');" />
-        </div>
-        <div class="container">
-            <div class="col twenty">
+
+        <div class="main">
+          <div class="container builder">
+
+            <div>
+                <input type="button" value="push" onclick="app.action('push');" />
+                <input type="textbox" id="input" />
+                <br/>
+                <input type="button" value="pop" onclick="app.action('pop');" />
+                <br/>
+                <input type="button" value="add" onclick="app.action('add');" />
+                <input type="button" value="subtract" onclick="app.action('subtract');" />
+                <input type="button" value="multiply" onclick="app.action('multiply');" />
+                <input type="button" value="divide" onclick="app.action('divide');" />
+                <br/>
+                <input type="button" value="outN" onclick="app.action('outN');" />
+                <input type="button" value="outC" onclick="app.action('outC');" />
+            </div>
+            <div>
+                STDOUT: <br/>
+                <textarea class="console" id="output" readonly rows="6" cols="50"></textarea>
+            </div>
+            <div>
+                <input type="button" value="start again" onclick="app.action('start');" />
+            </div>
+            <div>
                 Stack:
                 <div id="stackView"></div>
             </div>
-            <div class="col eighty">
-                Command Chain:
-                <div id="commandView"></div>
-            </div>
+          </div>
+
+          <div class="container editor">
+
+          </div>
+
+          <div class="container commandChain">
+            Command Chain:
+            <div id="commandView"></div>
+          </div>
+
         </div>
+
+        <div class="footer">
+          <span><strong>Esoteric</strong> - Relating to concepts that are highly theoretical and without obvious practical application.</span>
+        </div>
+
     </body>
 
-    <script src="scripts/interpreter.js"></script>
-    <script src="scripts/app.js"></script>
+    <script src="js/interpreter.js"></script>
+    <script src="js/app.js"></script>
 </html>
