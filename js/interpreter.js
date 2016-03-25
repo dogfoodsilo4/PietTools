@@ -89,6 +89,39 @@ var interpreter = (function(exports)
             }
         }
 
+        // duplicate: Pushes a copy of the top value on the stack on to the stack.
+        // Hue: +4, Lightness: +0
+        exports.duplicate = function() {
+            var top = self.getTop();
+            _stack.push(top);
+            logCmd("duplicate", top);
+        }
+
+        // roll: Pops the top two values off the stack and "rolls" the remaining stack entries
+        // to a depth equal to the second value popped, by a number of rolls equal to the first value popped.
+        // A single roll to depth n is defined as burying the top value on the stack n deep and bringing all values above it up by 1 place.
+        // A negative number of rolls rolls in the opposite direction.
+        // A negative depth is an error and the command is ignored.
+        // Hue: +4, Lightness: +1
+        exports.roll = function() {
+            var rolls = self.pop(true);
+            var depth = self.pop(true);
+
+            if (rolls < 0) { rolls = Math.abs(rolls); }
+            // TODO: n rolls, assume 1 for now
+            if (depth >= 0) {
+                for (var roll = 0; roll < rolls; roll++) {
+                    var iTop = _stack.length - 1;
+                    var top = self.getTop();
+                    for (var i = iTop; i > iTop - depth; i--) {
+                        _stack[i] = _stack[i-1];
+                    }
+                    _stack[iTop - depth] = top;
+                }
+
+            }
+        }
+
         // out: Pops the top value off the stack and prints it to STDOUT as a number.
         // Hue: +5, Lightness: +1
         exports.outN = function() {
@@ -130,6 +163,8 @@ var interpreter = (function(exports)
             subtract: exports.subtract,
             multiply: exports.multiply,
             divide: exports.divide,
+            duplicate: exports.duplicate,
+            roll: exports.roll,
             outN: exports.outN,
             outC: exports.outC
         }

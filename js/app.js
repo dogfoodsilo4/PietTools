@@ -39,6 +39,12 @@ var app = (function() {
             case "divide":
                 itpr.divide();
                 break;
+            case "duplicate":
+                itpr.duplicate();
+                break;
+            case "roll":
+                itpr.roll();
+                break;
             case "outN":
                 STDOUT(itpr.outN());
                 break;

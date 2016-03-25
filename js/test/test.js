@@ -68,6 +68,36 @@ describe("Piet Tools tests", function () {
             assert.equal(itpr.stack().toString(), [ 7, 30 ]);
         });
 
+        it("should push a copy of the top value on the stack on to the stack", function() {
+            itpr.push(8);
+            itpr.push(9);
+            itpr.duplicate();
+
+            assert.equal(itpr.stack().toString(), [ 8, 9, 9 ]);
+        });
+
+        it("should pop the top two values off the stack and roll the remaining stack entries to a depth equal to the second value popped", function() {
+            itpr.push(3);
+            itpr.push(2);
+            itpr.push(1);
+            itpr.push(2);
+            itpr.push(1);
+            itpr.roll();
+
+            assert.equal(itpr.stack().toString(), [ 1, 3, 2 ]);
+        });
+
+        it("should pop the top two values off the stack and roll the remaining stack entries to a depth equal to the second value popped, by a number of rolls equal to the first value popped", function() {
+            itpr.push(3);
+            itpr.push(2);
+            itpr.push(1);
+            itpr.push(2);
+            itpr.push(2);
+            itpr.roll();
+
+            assert.equal(itpr.stack().toString(), [ 2, 1, 3 ]);
+        });
+
         it("should pop the top value off the stack and print to STDOUT as a number", function() {
 
             itpr.push(3);
