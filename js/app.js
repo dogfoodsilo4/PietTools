@@ -14,7 +14,7 @@ var app = (function() {
     input.focus();
 
     function command(type) {
-        var n = parseInt(self.input.value);
+
 
         switch (type) {
             case "start":
@@ -22,7 +22,7 @@ var app = (function() {
                 output.value = "";
                 break;
             case "push":
-                itpr.push(n);
+                itpr.push(getInputValue());
                 break;
             case "pop":
                 itpr.pop();
@@ -54,6 +54,23 @@ var app = (function() {
         self.input.focus();
         self.input.value = "";
     };
+
+    function getInputValue() {
+        // Get input value
+        var n = self.input.value;
+
+        // Read characters as ascii char code
+        if (isNaN(n)) {
+            if (n.length === 1) {
+                n = n.charCodeAt(0);
+            }
+            else if (n === "\\n") {
+                n = 10;
+            }
+        }
+
+        return parseInt(n);
+    }
 
     function printStack() {
         var stackText = "";
