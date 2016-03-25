@@ -13,21 +13,37 @@
           <div class="container builder">
 
             <div>
-                <input type="button" value="push" onclick="app.action('push');" />
                 <input type="textbox" id="input" />
-                <br/>
+                <input type="button" value="push" onclick="app.action('push');" />
                 <input type="button" value="pop" onclick="app.action('pop');" />
                 <br/>
                 <input type="button" value="add" onclick="app.action('add');" />
                 <input type="button" value="subtract" onclick="app.action('subtract');" />
                 <input type="button" value="multiply" onclick="app.action('multiply');" />
+                <br/>
                 <input type="button" value="divide" onclick="app.action('divide');" />
+                <input type="button" value="mod" onclick="app.action('mod');" />
+                <input type="button" value="not" onclick="app.action('not');" />
+                <br/>
+                <input type="button" value="greater" onclick="app.action('greater');" />
+                <input type="button" value="pointer" onclick="app.action('pointer');" />
+                <input type="button" value="switch" onclick="app.action('switch');" />
                 <br/>
                 <input type="button" value="duplicate" onclick="app.action('duplicate');" />
                 <input type="button" value="roll" onclick="app.action('roll');" />
+                <input type="button" value="inN" onclick="app.action('inN');" />
                 <br/>
+                <input type="button" value="inC" onclick="app.action('inC');" />
                 <input type="button" value="outN" onclick="app.action('outN');" />
                 <input type="button" value="outC" onclick="app.action('outC');" />
+            </div>
+            <div>
+                <ul>
+                    <li>Hue: #FF0000 red</li>
+                    <li>Lightness: Normal</li>
+                    <li>DP: right</li>
+                    <li>CC: left</li>
+                </ul>
             </div>
             <div>
                 STDOUT: <br/>
@@ -48,7 +64,7 @@
 
           <div class="container commandChain">
             Command Chain:
-            <div id="commandView"></div>
+            <div id="commandView" class="scroller"></div>
           </div>
 
         </div>
