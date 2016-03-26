@@ -2,8 +2,10 @@
     <head>
         <title>Piet Tools</title>
         <link type="text/css" href="css/style.css" rel="stylesheet"></link>
+        <script src="js/lib/jquery.min.js"></script>
+        <script src="js/lib/angular.min.js"></script>
     </head>
-    <body>
+    <body ng-app="ptApp" ng-controller="ptCtrl">
 
         <div class="header">
           <h3>Piet Tools</h3>
@@ -13,31 +15,14 @@
           <div class="container builder">
 
             <div>
-                <input type="textbox" id="input" />
-                <input type="button" value="push" onclick="app.action('push');" />
-                <input type="button" value="pop" onclick="app.action('pop');" />
-                <br/>
-                <input type="button" value="add" onclick="app.action('add');" />
-                <input type="button" value="subtract" onclick="app.action('subtract');" />
-                <input type="button" value="multiply" onclick="app.action('multiply');" />
-                <br/>
-                <input type="button" value="divide" onclick="app.action('divide');" />
-                <input type="button" value="mod" onclick="app.action('mod');" />
-                <input type="button" value="not" onclick="app.action('not');" />
-                <br/>
-                <input type="button" value="greater" onclick="app.action('greater');" />
-                <input type="button" value="pointer" onclick="app.action('pointer');" />
-                <input type="button" value="switch" onclick="app.action('switch');" />
-                <br/>
-                <input type="button" value="duplicate" onclick="app.action('duplicate');" />
-                <input type="button" value="roll" onclick="app.action('roll');" />
-                <input type="button" value="inN" onclick="app.action('inN');" />
-                <br/>
-                <input type="button" value="inC" onclick="app.action('inC');" />
-                <input type="button" value="outN" onclick="app.action('outN');" />
-                <input type="button" value="outC" onclick="app.action('outC');" />
+                <input type="textbox" id="input" ng-model="input" />
+                <span ng-repeat="command in data.commands ">
+                    <input type="button" ng-value="command.action" ng-style="" ng-click="action(command);" />
+                </span>
+
             </div>
             <div>
+                Current State: <br/>
                 <ul>
                     <li>Hue: #FF0000 red</li>
                     <li>Lightness: Normal</li>
@@ -47,14 +32,14 @@
             </div>
             <div>
                 STDOUT: <br/>
-                <textarea class="console" id="output" readonly rows="6" cols="50"></textarea>
+                <textarea class="console" readonly rows="6" cols="50" ng-model="output"></textarea>
             </div>
             <div>
-                <input type="button" value="start again" onclick="app.action('start');" />
+                <input type="button" value="start again" ng-click="start" />
             </div>
             <div>
                 Stack:
-                <div id="stackView"></div>
+                <div class="scroller" ng-bind-template="{{stackText}}"></div>
             </div>
           </div>
 
@@ -64,7 +49,7 @@
 
           <div class="container commandChain">
             Command Chain:
-            <div id="commandView" class="scroller"></div>
+            <div class="scroller" ng-bind-template="{{commandChainText}}"></div>
           </div>
 
         </div>

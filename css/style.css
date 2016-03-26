@@ -29,6 +29,7 @@ body {
   clear: none;
   padding: 10px;
   min-height: 500;
+
 }
 
 .builder {
@@ -42,7 +43,6 @@ body {
     width: 100;
 }
 
-
 .editor {
   float: left;
 }
@@ -55,6 +55,7 @@ body {
 
 .scroller {
     overflow-y: auto;
+    white-space:pre-wrap;
 }
 
 .console {
