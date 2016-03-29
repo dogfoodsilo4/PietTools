@@ -61,11 +61,20 @@ describe("Piet Tools tests", function () {
 
         it("should pop the top two values off the stack, calculate the integer division of the second top value by the top value, and push the result back on the stack", function() {
             itpr.push(7);
+            itpr.push(10);
             itpr.push(5);
-            itpr.push(6);
-            itpr.multiply();
+            itpr.divide();
 
-            assert.equal(itpr.stack().toString(), [ 7, 30 ]);
+            assert.equal(itpr.stack().toString(), [ 7, 2 ]);
+        });
+
+        it("should pop the top two values off the stack, calculate the second top value modulo the top value, and push the result back on the stack.", function() {
+            itpr.push(7);
+            itpr.push(5);
+            itpr.push(13);
+            itpr.mod();
+
+            assert.equal(itpr.stack().toString(), [ 7, 3 ]);
         });
 
         it("should push a copy of the top value on the stack on to the stack", function() {

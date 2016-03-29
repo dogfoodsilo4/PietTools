@@ -89,6 +89,19 @@ var interpreter = (function(exports)
             }
         }
 
+        // mod: Pops the top two values off the stack, calculates the second top value modulo the top value, and pushes the result back on the stack.
+        // The result has the same sign as the divisor (the top value).
+        // If the top value is zero, this is a divide by zero error, which is handled as an implementation-dependent error, though simply ignoring the command is recommended.
+        // Hue: +2, Lightness: +1
+        exports.mod = function() {
+            var a = self.pop(true);
+            var b = self.pop(true);
+            if (validate(a,b) && a !== 0) {
+                self.push(a % b, true);
+                logCmd("divide", b + "%" + a);
+            }
+        }
+
         // duplicate: Pushes a copy of the top value on the stack on to the stack.
         // Hue: +4, Lightness: +0
         exports.duplicate = function() {
