@@ -94,11 +94,26 @@ var interpreter = (function(exports)
         // If the top value is zero, this is a divide by zero error, which is handled as an implementation-dependent error, though simply ignoring the command is recommended.
         // Hue: +2, Lightness: +1
         exports.mod = function() {
+            if (self.getTop() !== 0)
+            {
+                var a = self.pop(true);
+                var b = self.pop(true);
+                if (validate(a,b) && a !== 0) {
+                    self.push(a % b, true);
+                    logCmd("mod", b + "%" + a);
+                }
+            }
+        }
+
+        // greater: Pops the top two values off the stack, and pushes 1 on to the stack if the second top value is greater than the top value, and pushes 0 if it is not greater.
+        // Hue: +2, Lightness: +2
+        exports.greater = function() {
             var a = self.pop(true);
             var b = self.pop(true);
-            if (validate(a,b) && a !== 0) {
-                self.push(a % b, true);
-                logCmd("divide", b + "%" + a);
+            if (validate(a,b)) {
+                var c = b > a ? 1 : 0;
+                self.push(c, true);
+                logCmd("greater", c);
             }
         }
 
@@ -176,6 +191,8 @@ var interpreter = (function(exports)
             subtract: exports.subtract,
             multiply: exports.multiply,
             divide: exports.divide,
+            divide: exports.mod,
+            divide: exports.greater,
             duplicate: exports.duplicate,
             roll: exports.roll,
             outN: exports.outN,

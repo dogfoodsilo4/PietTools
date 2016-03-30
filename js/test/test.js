@@ -68,13 +68,36 @@ describe("Piet Tools tests", function () {
             assert.equal(itpr.stack().toString(), [ 7, 2 ]);
         });
 
-        it("should pop the top two values off the stack, calculate the second top value modulo the top value, and push the result back on the stack.", function() {
+        it("should pop the top two values off the stack, calculate the second top value modulo the top value, and push the result back on the stack", function() {
             itpr.push(7);
             itpr.push(5);
             itpr.push(13);
             itpr.mod();
 
-            assert.equal(itpr.stack().toString(), [ 7, 3 ]);
+            // The result has the same sign as the divisor (the top value).
+            itpr.push(-5);
+            itpr.push(-13);
+            itpr.mod();
+
+            // If the top value is zero, this is a divide by zero errorabd the command should be ignored.
+            itpr.push(5);
+            itpr.push(0);
+            itpr.mod();
+
+            assert.equal(itpr.stack().toString(), [ 7, 3, -3, 5, 0 ]);
+        });
+
+        it("should pop the top two values off the stack, and push 1 on to the stack if the second top value is greater than the top value, and push 0 if it is not greater.", function() {
+            itpr.push(3);
+            itpr.push(8);
+            itpr.push(9);
+            itpr.greater();
+
+            itpr.push(7);
+            itpr.push(5);
+            itpr.greater();
+
+            assert.equal(itpr.stack().toString(), [ 3, 0, 1 ]);
         });
 
         it("should push a copy of the top value on the stack on to the stack", function() {
