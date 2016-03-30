@@ -43,6 +43,8 @@ var Data = (function(exports)
         , {'name': 'black',          'hex': '#000000', 'hue': '', 'lightness': ''}
     }
 
+    export.directions = ['right', 'down', 'left', 'up'];
+
     export.execution = {
           {'dp': 'right', 'cc': 'left',  'codelChosen': 'uppermost'}
         , {'dp': 'right', 'cc': 'right', 'codelChosen': 'lowermost'}

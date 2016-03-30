@@ -1,10 +1,11 @@
 
 var interpreter = (function(exports)
-    {
+{
         var self = exports;
 
         var _stack = [];
         var _commandChain = [];
+        var _dp = 1; // 1 = right, 2 = down, 3 = left, 4 = up;
 
         exports.stack = function() {
             return _stack;
@@ -14,9 +15,14 @@ var interpreter = (function(exports)
             return _commandChain;
         }
 
+        exports.DirectionPointer = function() {
+            return self._dp;
+        }
+
         exports.start = function() {
             _stack = [];
             _commandChain = [];
+            self._dp = 1; // reset to right
         }
 
         exports.getTop = function() {
@@ -105,8 +111,10 @@ var interpreter = (function(exports)
             }
         }
 
+        // TODO: not
+
         // greater: Pops the top two values off the stack, and pushes 1 on to the stack if the second top value is greater than the top value, and pushes 0 if it is not greater.
-        // Hue: +2, Lightness: +2
+        // Hue: +3, Lightness: +0
         exports.greater = function() {
             var a = self.pop(true);
             var b = self.pop(true);
@@ -115,6 +123,17 @@ var interpreter = (function(exports)
                 self.push(c, true);
                 logCmd("greater", c);
             }
+        }
+
+        // pointer: Pops the top value off the stack and rotates the DP clockwise that many steps (anticlockwise if negative).
+        // Hue: +3, Lightness: +1
+        exports.pointer = function() {
+            var a = self.pop(true);
+            var moves = a % 4;
+            var b = self.DirectionPointer() + moves;
+            b = b > 4 ? b - 4 : b <= 0 ? b + 4 : b
+            self._dp = b;
+            logCmd("pointer", b);
         }
 
         // duplicate: Pushes a copy of the top value on the stack on to the stack.
@@ -191,8 +210,9 @@ var interpreter = (function(exports)
             subtract: exports.subtract,
             multiply: exports.multiply,
             divide: exports.divide,
-            divide: exports.mod,
-            divide: exports.greater,
+            mod: exports.mod,
+            greater: exports.greater,
+            pointer: exports.pointer,
             duplicate: exports.duplicate,
             roll: exports.roll,
             outN: exports.outN,
