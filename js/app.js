@@ -22,9 +22,20 @@ ptApp.controller('ptCtrl', ['$scope', 'Data', function ($scope, Data) {
     $scope.start();
 
     $scope.action = function(command) {
+
+		var err = null;
+
+		// TODO: check if we have anything on the stack. greater with empty stack pushes null to stack, that's bad.
+
         switch (command.action) {
             case "push":
-                itpr.push(getInputValue());
+				var input = getInputValue()
+				if (input != 0) {
+	                itpr.push();
+				} else {
+					err = "Piet images have no way to push 0, try 1 subtract 1 ";
+					// TODO: output validation error.
+				}
                 break;
             case "pop":
                 itpr.pop();
@@ -68,9 +79,11 @@ ptApp.controller('ptCtrl', ['$scope', 'Data', function ($scope, Data) {
             default:
                 break;
         }
-		saveState();
-		$scope.state.colour = getColour(command.index);
-        updateState();
+		if (err === null) {
+			saveState();
+			$scope.state.colour = getColour(command.index);
+		}
+		updateState();
     };
 
     function updateState() {
