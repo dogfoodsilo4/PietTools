@@ -43,6 +43,12 @@ body {
     width: 100;
 }
 
+.builder input[type=button] {
+    padding: 2;
+    border-width: 6;
+    border-style: solid;
+}
+
 .editor {
   float: left;
 }

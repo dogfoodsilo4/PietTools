@@ -17,15 +17,14 @@
             <div>
                 <input type="textbox" id="input" ng-model="input" />
                 <span ng-repeat="command in data.commands ">
-                    <input type="button" ng-value="command.action" ng-style="" ng-click="action(command);" />
+                    <input type="button" ng-value="command.action" ng-click="action(command);" ng-style="{'border-color': command.colour}" />
                 </span>
 
             </div>
             <div>
                 Current State: <br/>
                 <ul>
-                    <li>Hue: #FF0000 red</li>
-                    <li>Lightness: Normal</li>
+                    <li>Colour: <span ng-bind-template="{{state.colour}}"></span></li>
                     <li>DP: right</li>
                     <li>CC: left</li>
                 </ul>

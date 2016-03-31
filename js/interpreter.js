@@ -144,9 +144,9 @@ var interpreter = (function(exports)
           if (!isSubCmd) {
             _commandChain.push(cmd + "(" + value + ")");
           }
-          else {
-            _commandChain.push("- " + cmd + "(" + value + ")");
-          }
+        //   else {
+        //     _commandChain.push("- " + cmd + "(" + value + ")");
+        //   }
         }
 
         function validate(a,b) {
