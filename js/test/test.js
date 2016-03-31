@@ -190,7 +190,7 @@ describe("Piet Tools", function () {
             itpr.push(68);
             itpr.outC();
             assert.equal(itpr.commandChain().toString(),
-                "push(3),push(5),push(8),- pop(8),- pop(5),- push(13),add(8+5),- pop(13),- pop(3),push(-10),subtract(3-13),push(68),- pop(68),outC(D)")
+                "push(3),push(5),push(8),add(8+5),push(-10),subtract(3-13),push(68),outC(D)")
         });
 
         // Should ignore -values??
