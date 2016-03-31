@@ -141,7 +141,7 @@ ptApp.controller('ptCtrl', ['$scope', 'Data', function ($scope, Data) {
     };
 
     function STDOUT(value) {
-		if (value) {
+		if (value != null) {
 	        $scope.output += value;
 		}
     }
