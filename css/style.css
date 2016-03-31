@@ -51,6 +51,7 @@ body {
 
 .editor {
   float: left;
+  width: 50%;
 }
 
 .commandChain {

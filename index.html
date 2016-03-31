@@ -25,7 +25,7 @@
                 Current State: <br/>
                 <ul>
                     <li>Colour: <span ng-bind-template="{{state.colour}}"></span></li>
-                    <li>DP: right</li>
+                    <li>DP: <span ng-bind-template="{{state.dp}}"></span></li>
                     <li>CC: left</li>
                 </ul>
             </div>
@@ -34,7 +34,8 @@
                 <textarea class="console" readonly rows="6" cols="50" ng-model="output"></textarea>
             </div>
             <div>
-                <input type="button" value="start again" ng-click="start" />
+                <input type="button" value="start again" ng-click="start()" />
+                <input type="button" value="undo" ng-click="undo()" />
             </div>
             <div>
                 Stack:
@@ -43,7 +44,9 @@
           </div>
 
           <div class="container editor">
-
+              {{state}}
+              <br/><br/>
+              {{itprState}}
           </div>
 
           <div class="container commandChain">

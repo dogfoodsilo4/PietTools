@@ -12,8 +12,9 @@ ptApp.controller('ptCtrl', ['$scope', 'Data', function ($scope, Data) {
         angular.element('#input').focus();
 		$scope.state = {
 	        colour: 1,
-	        DP: 'right',
-	        CC: 'left'
+	        dp: 1,
+	        cc: 'left',
+			lastState: null
 	    };
 		updateCommandColours();
     }
@@ -40,6 +41,18 @@ ptApp.controller('ptCtrl', ['$scope', 'Data', function ($scope, Data) {
             case "divide":
                 itpr.divide();
                 break;
+			case "mod":
+                itpr.mod();
+                break;
+			case "not":
+                itpr.not();
+                break;
+			case "greater":
+                itpr.greater();
+                break;
+			case "pointer":
+                itpr.pointer();
+                break;
             case "duplicate":
                 itpr.duplicate();
                 break;
@@ -55,12 +68,15 @@ ptApp.controller('ptCtrl', ['$scope', 'Data', function ($scope, Data) {
             default:
                 break;
         }
-        updateState(command);
+		saveState();
+		$scope.state.colour = getColour(command.index);
+        updateState();
     };
 
-    function updateState(command) {
+    function updateState() {
 
-		$scope.state.colour = getColour(command);
+
+		$scope.state.dp = itpr.DirectionPointer();
 
 		updateCommandColours();
 
@@ -69,7 +85,24 @@ ptApp.controller('ptCtrl', ['$scope', 'Data', function ($scope, Data) {
 
         angular.element('#input').focus();
         $scope.input = "";
-    };
+
+		$scope.itprState = itpr.getState();
+	};
+
+	function saveState() {
+		$scope.state.lastState = JSON.parse(JSON.stringify($scope.state));
+		itpr.saveState();
+	}
+
+	$scope.undo = function() {
+		if ($scope.state.lastState != null) {
+			$scope.state = JSON.parse(JSON.stringify($scope.state.lastState));
+			itpr.restoreState();
+			updateState();
+		}
+
+		// TODO: There's a bug with the itpr history, if your undo to the beginning, it sets the history as the command being pushed???????
+	}
 
     function getInputValue() {
         // Get input value
@@ -115,13 +148,13 @@ ptApp.controller('ptCtrl', ['$scope', 'Data', function ($scope, Data) {
 
 	function updateCommandColours() {
 		for (var i = 0; i < $scope.data.commands.length; i++) {
-			var c = getColour($scope.data.commands[i]);
+			var c = getColour($scope.data.commands[i].index);
 			$scope.data.commands[i].colour = $scope.data.colours[c].hex;
 		}
 	}
 
-	function getColour(command) {
-		var c = $scope.state.colour + command.index;
+	function getColour(index) {
+		var c = $scope.state.colour + index;
 		return c > 17 ? c - 18 : c;
 	};
 

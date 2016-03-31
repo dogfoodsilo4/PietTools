@@ -7,6 +7,8 @@ var interpreter = (function(exports)
         var _commandChain = [];
         var _dp = 1; // 1 = right, 2 = down, 3 = left, 4 = up;
 
+        self._history = [];
+
         exports.stack = function() {
             return _stack;
         }
@@ -23,6 +25,30 @@ var interpreter = (function(exports)
             _stack = [];
             _commandChain = [];
             self._dp = 1; // reset to right
+            self._history = [];
+            self.saveState();
+        }
+
+        exports.saveState = function() {
+            self._history.push({
+                'stack': JSON.parse(JSON.stringify(_stack)),
+                'commandChain': JSON.parse(JSON.stringify(_commandChain)),
+                'dp': JSON.parse(JSON.stringify(self._dp))
+            });
+        }
+
+        exports.getState = function() {
+            return self._history;
+        }
+
+        exports.restoreState = function() {
+            if (self._history.length > 1) {
+                self._history.pop();
+                var previousState = self._history[self._history.length-1];
+                _stack = previousState.stack;
+                _commandChain = previousState.commandChain;
+                self._dp = previousState.dp;
+            }
         }
 
         exports.getTop = function() {
@@ -143,6 +169,8 @@ var interpreter = (function(exports)
             logCmd("pointer", b);
         }
 
+        // TODO: switch
+
         // duplicate: Pushes a copy of the top value on the stack on to the stack.
         // Hue: +4, Lightness: +0
         exports.duplicate = function() {
@@ -210,6 +238,10 @@ var interpreter = (function(exports)
         return {
             stack: exports.stack,
             commandChain: exports.commandChain,
+            DirectionPointer: exports.DirectionPointer,
+            saveState: exports.saveState,
+            getState: exports.getState,
+            restoreState: exports.restoreState,
             start: exports.start,
             push: exports.push,
             pop: exports.pop,
