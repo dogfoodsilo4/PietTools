@@ -16,7 +16,7 @@ ptApp.controller('ptCtrl', ['$scope', 'Data', function ($scope, Data) {
 	        cc: 'left',
 			lastState: null
 	    };
-		updateCommandColours();
+		updateState();
     }
 
     $scope.start();
