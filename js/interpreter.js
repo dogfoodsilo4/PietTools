@@ -111,7 +111,14 @@ var interpreter = (function(exports)
             }
         }
 
-        // TODO: not
+        // not: Replaces the top value of the stack with 0 if it is non-zero, and 1 if it is zero.
+        // Hue: +2, Lightness: +2
+        exports.not = function() {
+            var a = self.pop(true);
+            var c = a === 0 ? 1 : 0;
+            self.push(c, true);
+            logCmd("not", c);
+        }
 
         // greater: Pops the top two values off the stack, and pushes 1 on to the stack if the second top value is greater than the top value, and pushes 0 if it is not greater.
         // Hue: +3, Lightness: +0
@@ -211,6 +218,7 @@ var interpreter = (function(exports)
             multiply: exports.multiply,
             divide: exports.divide,
             mod: exports.mod,
+            not: exports.not,
             greater: exports.greater,
             pointer: exports.pointer,
             duplicate: exports.duplicate,

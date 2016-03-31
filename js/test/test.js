@@ -87,6 +87,19 @@ describe("Piet Tools", function () {
             assert.equal(itpr.stack().toString(), [ 7, 3, -3, 5, 0 ]);
         });
 
+        it("not() should replace the top value of the stack with 0 if it is non-zero, and 1 if it is zero", function() {
+            itpr.push(7);
+            itpr.not();
+
+            itpr.push(-3);
+            itpr.not();
+
+            itpr.push(0);
+            itpr.not();
+
+            assert.equal(itpr.stack().toString(), [ 0, 0, 1 ]);
+        });
+
         it("greater() should pop the top two values off the stack, and push 1 on to the stack if the second top value is greater than the top value, and push 0 if it is not greater.", function() {
             itpr.push(3);
             itpr.push(8);
