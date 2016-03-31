@@ -1,10 +1,11 @@
 
 var interpreter = (function(exports)
-    {
+{
         var self = exports;
 
         var _stack = [];
         var _commandChain = [];
+        var _dp = 1; // 1 = right, 2 = down, 3 = left, 4 = up;
 
         exports.stack = function() {
             return _stack;
@@ -14,9 +15,14 @@ var interpreter = (function(exports)
             return _commandChain;
         }
 
+        exports.DirectionPointer = function() {
+            return self._dp;
+        }
+
         exports.start = function() {
             _stack = [];
             _commandChain = [];
+            self._dp = 1; // reset to right
         }
 
         exports.getTop = function() {
@@ -87,6 +93,54 @@ var interpreter = (function(exports)
                 self.push(b / a, true);
                 logCmd("divide", b + "/" + a);
             }
+        }
+
+        // mod: Pops the top two values off the stack, calculates the second top value modulo the top value, and pushes the result back on the stack.
+        // The result has the same sign as the divisor (the top value).
+        // If the top value is zero, this is a divide by zero error, which is handled as an implementation-dependent error, though simply ignoring the command is recommended.
+        // Hue: +2, Lightness: +1
+        exports.mod = function() {
+            if (self.getTop() !== 0)
+            {
+                var a = self.pop(true);
+                var b = self.pop(true);
+                if (validate(a,b) && a !== 0) {
+                    self.push(a % b, true);
+                    logCmd("mod", b + "%" + a);
+                }
+            }
+        }
+
+        // not: Replaces the top value of the stack with 0 if it is non-zero, and 1 if it is zero.
+        // Hue: +2, Lightness: +2
+        exports.not = function() {
+            var a = self.pop(true);
+            var c = a === 0 ? 1 : 0;
+            self.push(c, true);
+            logCmd("not", c);
+        }
+
+        // greater: Pops the top two values off the stack, and pushes 1 on to the stack if the second top value is greater than the top value, and pushes 0 if it is not greater.
+        // Hue: +3, Lightness: +0
+        exports.greater = function() {
+            var a = self.pop(true);
+            var b = self.pop(true);
+            if (validate(a,b)) {
+                var c = b > a ? 1 : 0;
+                self.push(c, true);
+                logCmd("greater", c);
+            }
+        }
+
+        // pointer: Pops the top value off the stack and rotates the DP clockwise that many steps (anticlockwise if negative).
+        // Hue: +3, Lightness: +1
+        exports.pointer = function() {
+            var a = self.pop(true);
+            var moves = a % 4;
+            var b = self.DirectionPointer() + moves;
+            b = b > 4 ? b - 4 : b <= 0 ? b + 4 : b
+            self._dp = b;
+            logCmd("pointer", b);
         }
 
         // duplicate: Pushes a copy of the top value on the stack on to the stack.
@@ -163,6 +217,10 @@ var interpreter = (function(exports)
             subtract: exports.subtract,
             multiply: exports.multiply,
             divide: exports.divide,
+            mod: exports.mod,
+            not: exports.not,
+            greater: exports.greater,
+            pointer: exports.pointer,
             duplicate: exports.duplicate,
             roll: exports.roll,
             outN: exports.outN,

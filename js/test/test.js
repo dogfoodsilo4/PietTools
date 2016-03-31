@@ -1,22 +1,22 @@
 var assert          = require("chai").assert;
 var itpr            = require("../Interpreter.js");
 
-describe("Piet Tools tests", function () {
+describe("Piet Tools", function () {
 
-    describe("Interpreter tests", function () {
+    describe("Interpreter", function () {
 
         beforeEach(function() {
             itpr.start();
           });
 
-        it("should push a value on to the stack", function() {
+        it("push() should push a value on to the stack", function() {
 
             itpr.push(1);
             itpr.push(2);
             assert.equal(itpr.stack().toString(), [1, 2]);
         });
 
-        it("should pop a value of the stack", function() {
+        it("pop() should pop a value of the stack", function() {
 
             itpr.push(3);
             itpr.push(4);
@@ -28,7 +28,7 @@ describe("Piet Tools tests", function () {
             assert.equal(itpr.getTop(), 4);
         });
 
-        it("should pop the top two values off the stack, adds them and push the result back on the stack", function() {
+        it("add() should pop the top two values off the stack, adds them and push the result back on the stack", function() {
 
             itpr.push(6);
             itpr.push(7);
@@ -40,7 +40,7 @@ describe("Piet Tools tests", function () {
 
         // Should ignore strings in the stack??
 
-        it("should pop the top two values off the stack, calculate the second top value minus the top value, and push the result back on the stack", function() {
+        it("subtract() should pop the top two values off the stack, calculate the second top value minus the top value, and push the result back on the stack", function() {
 
             itpr.push(3);
             itpr.push(9);
@@ -50,7 +50,7 @@ describe("Piet Tools tests", function () {
             assert.equal(itpr.stack().toString(), [ 3, 3 ]);
         });
 
-        it("should pop the top two values off the stack, multiply them, and push the result back on the stack", function() {
+        it("multiply() should pop the top two values off the stack, multiply them, and push the result back on the stack", function() {
             itpr.push(7);
             itpr.push(5);
             itpr.push(6);
@@ -59,16 +59,83 @@ describe("Piet Tools tests", function () {
             assert.equal(itpr.stack().toString(), [ 7, 30 ]);
         });
 
-        it("should pop the top two values off the stack, calculate the integer division of the second top value by the top value, and push the result back on the stack", function() {
+        it("divide() should pop the top two values off the stack, calculate the integer division of the second top value by the top value, and push the result back on the stack", function() {
             itpr.push(7);
+            itpr.push(10);
             itpr.push(5);
-            itpr.push(6);
-            itpr.multiply();
+            itpr.divide();
 
-            assert.equal(itpr.stack().toString(), [ 7, 30 ]);
+            assert.equal(itpr.stack().toString(), [ 7, 2 ]);
         });
 
-        it("should push a copy of the top value on the stack on to the stack", function() {
+        it("mod() should pop the top two values off the stack, calculate the second top value modulo the top value, and push the result back on the stack", function() {
+            itpr.push(7);
+            itpr.push(5);
+            itpr.push(13);
+            itpr.mod();
+
+            // The result has the same sign as the divisor (the top value).
+            itpr.push(-5);
+            itpr.push(-13);
+            itpr.mod();
+
+            // If the top value is zero, this is a divide by zero errorabd the command should be ignored.
+            itpr.push(5);
+            itpr.push(0);
+            itpr.mod();
+
+            assert.equal(itpr.stack().toString(), [ 7, 3, -3, 5, 0 ]);
+        });
+
+        it("not() should replace the top value of the stack with 0 if it is non-zero, and 1 if it is zero", function() {
+            itpr.push(7);
+            itpr.not();
+
+            itpr.push(-3);
+            itpr.not();
+
+            itpr.push(0);
+            itpr.not();
+
+            assert.equal(itpr.stack().toString(), [ 0, 0, 1 ]);
+        });
+
+        it("greater() should pop the top two values off the stack, and push 1 on to the stack if the second top value is greater than the top value, and push 0 if it is not greater.", function() {
+            itpr.push(3);
+            itpr.push(8);
+            itpr.push(9);
+            itpr.greater();
+
+            itpr.push(7);
+            itpr.push(5);
+            itpr.greater();
+
+            assert.equal(itpr.stack().toString(), [ 3, 0, 1 ]);
+        });
+
+        it("pointer() should pop the top value off the stack and rotate the DP clockwise that many steps (anticlockwise if negative).", function() {
+            itpr.push(2);
+            itpr.pointer();
+
+            assert.equal(itpr.DirectionPointer(), 3);
+
+            itpr.push(-1);
+            itpr.pointer();
+
+            assert.equal(itpr.DirectionPointer(), 2);
+
+            itpr.push(-10);
+            itpr.pointer();
+
+            assert.equal(itpr.DirectionPointer(), 4);
+
+            itpr.push(17);
+            itpr.pointer();
+
+            assert.equal(itpr.DirectionPointer(), 1);
+        });
+
+        it("duplicate() should push a copy of the top value on the stack on to the stack", function() {
             itpr.push(8);
             itpr.push(9);
             itpr.duplicate();
@@ -76,7 +143,7 @@ describe("Piet Tools tests", function () {
             assert.equal(itpr.stack().toString(), [ 8, 9, 9 ]);
         });
 
-        it("should pop the top two values off the stack and roll the remaining stack entries to a depth equal to the second value popped", function() {
+        it("roll() should pop the top two values off the stack and roll the remaining stack entries to a depth equal to the second value popped", function() {
             itpr.push(3);
             itpr.push(2);
             itpr.push(1);
@@ -87,7 +154,7 @@ describe("Piet Tools tests", function () {
             assert.equal(itpr.stack().toString(), [ 1, 3, 2 ]);
         });
 
-        it("should pop the top two values off the stack and roll the remaining stack entries to a depth equal to the second value popped, by a number of rolls equal to the first value popped", function() {
+        it("roll() should pop the top two values off the stack and roll the remaining stack entries to a depth equal to the second value popped, by a number of rolls equal to the first value popped", function() {
             itpr.push(3);
             itpr.push(2);
             itpr.push(1);
@@ -98,7 +165,7 @@ describe("Piet Tools tests", function () {
             assert.equal(itpr.stack().toString(), [ 2, 1, 3 ]);
         });
 
-        it("should pop the top value off the stack and print to STDOUT as a number", function() {
+        it("outN() should pop the top value off the stack and print to STDOUT as a number", function() {
 
             itpr.push(3);
             itpr.push(65);
@@ -106,7 +173,7 @@ describe("Piet Tools tests", function () {
             assert.equal(itpr.outN(), 65);
         });
 
-        it("should pop the top value off the stack and print to STDOUT as a character", function() {
+        it("outC() should pop the top value off the stack and print to STDOUT as a character", function() {
 
             itpr.push(3);
             itpr.push(65);
