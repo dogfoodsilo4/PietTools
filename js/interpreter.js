@@ -44,7 +44,7 @@ var interpreter = (function(exports)
         exports.restoreState = function() {
             if (self._history.length > 1) {
                 self._history.pop();
-                var previousState = self._history[self._history.length-1];
+                var previousState = JSON.parse(JSON.stringify(self._history[self._history.length-1]));
                 _stack = previousState.stack;
                 _commandChain = previousState.commandChain;
                 self._dp = previousState.dp;

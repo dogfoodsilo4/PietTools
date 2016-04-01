@@ -31,7 +31,7 @@ ptApp.controller('ptCtrl', ['$scope', 'Data', function ($scope, Data) {
             case "push":
 				var input = getInputValue()
 				if (input != 0) {
-	                itpr.push();
+	                itpr.push(input);
 				} else {
 					err = "Piet images have no way to push 0, try 1 subtract 1 ";
 					// TODO: output validation error.
@@ -113,8 +113,6 @@ ptApp.controller('ptCtrl', ['$scope', 'Data', function ($scope, Data) {
 			itpr.restoreState();
 			updateState();
 		}
-
-		// TODO: There's a bug with the itpr history, if your undo to the beginning, it sets the history as the command being pushed???????
 	}
 
     function getInputValue() {
