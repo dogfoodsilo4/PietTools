@@ -28,14 +28,14 @@ body {
 .container {
   clear: none;
   padding: 10px;
-  min-height: 500;
-
+  height: 800;
+  overflow: auto;
 }
 
 .builder {
-  float: left;
-  background-color: #A9B0B3;
-  width: 400;
+    float: left;
+    background-color: #A9B0B3;
+    width: 25%;
 }
 
 .builder input {
@@ -50,14 +50,14 @@ body {
 }
 
 .editor {
-  float: left;
-  width: 50%;
+    float: left;
+    width: 45%;
 }
 
 .commandChain {
-  float: right;
-  background-color: #A9B0B3;
-  width: 200;
+    float: left;
+    background-color: #A9B0B3;
+    width: 25%;
 }
 
 .scroller {
