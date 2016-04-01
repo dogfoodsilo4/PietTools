@@ -135,6 +135,28 @@ describe("Piet Tools", function () {
             assert.equal(itpr.DirectionPointer(), 1);
         });
 
+        it("switch() should pop the top value off the stack and toggles the CC that many times (the absolute value of that many times if negative).", function() {
+            itpr.push(1);
+            itpr.switch();
+
+            assert.equal(itpr.CodelChooser(), 2);
+
+            itpr.push(1);
+            itpr.switch();
+
+            assert.equal(itpr.CodelChooser(), 1);
+
+            itpr.push(-1);
+            itpr.switch();
+
+            assert.equal(itpr.CodelChooser(), 2);
+
+            itpr.push(-5);
+            itpr.switch();
+
+            assert.equal(itpr.CodelChooser(), 1);
+        });
+
         it("duplicate() should push a copy of the top value on the stack on to the stack", function() {
             itpr.push(8);
             itpr.push(9);
@@ -190,7 +212,7 @@ describe("Piet Tools", function () {
             itpr.push(68);
             itpr.outC();
             assert.equal(itpr.commandChain().toString(),
-                "push(3),push(5),push(8),add(8+5),push(-10),subtract(3-13),push(68),outC(D)")
+                "push(3),push(5),push(8),add(8+5),subtract(3-13),push(68),outC(D)")
         });
 
         // Should ignore -values??

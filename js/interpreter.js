@@ -6,6 +6,7 @@ var interpreter = (function(exports)
         var _stack = [];
         var _commandChain = [];
         var _dp = 1; // 1 = right, 2 = down, 3 = left, 4 = up;
+        var _cc = 1; // 1 = left, 2 = right
 
         self._history = [];
 
@@ -21,10 +22,15 @@ var interpreter = (function(exports)
             return self._dp;
         }
 
+        exports.CodelChooser = function() {
+            return self._cc;
+        }
+
         exports.start = function() {
             _stack = [];
             _commandChain = [];
             self._dp = 1; // reset to right
+            self._cc = 1; // reset to left
             self._history = [];
             self.saveState();
         }
@@ -33,7 +39,8 @@ var interpreter = (function(exports)
             self._history.push({
                 'stack': JSON.parse(JSON.stringify(_stack)),
                 'commandChain': JSON.parse(JSON.stringify(_commandChain)),
-                'dp': JSON.parse(JSON.stringify(self._dp))
+                'dp': JSON.parse(JSON.stringify(self._dp)),
+                'cc': JSON.parse(JSON.stringify(self._cc))
             });
         }
 
@@ -48,6 +55,7 @@ var interpreter = (function(exports)
                 _stack = previousState.stack;
                 _commandChain = previousState.commandChain;
                 self._dp = previousState.dp;
+                self._cc = previousState.cc;
             }
         }
 
@@ -164,12 +172,22 @@ var interpreter = (function(exports)
             var a = self.pop(true);
             var moves = a % 4;
             var b = self.DirectionPointer() + moves;
-            b = b > 4 ? b - 4 : b <= 0 ? b + 4 : b
+            b = b > 4 ? b - 4 : b <= 0 ? b + 4 : b;
             self._dp = b;
             logCmd("pointer", b);
         }
 
-        // TODO: switch
+        // switch: Pops the top value off the stack and toggles the CC that many times (the absolute value of that many times if negative).
+        // Hue: +3, Lightness: +2
+        exports.switch = function() {
+            var a = self.pop(true);
+            var moves = Math.abs(a) % 2;
+            var b = self.CodelChooser() + moves;
+            b = b > 2 ? b - 2 : b;
+            self._cc = b;
+            logCmd("switch", b);
+        }
+
 
         // duplicate: Pushes a copy of the top value on the stack on to the stack.
         // Hue: +4, Lightness: +0
@@ -239,6 +257,7 @@ var interpreter = (function(exports)
             stack: exports.stack,
             commandChain: exports.commandChain,
             DirectionPointer: exports.DirectionPointer,
+            CodelChooser: exports.CodelChooser,
             saveState: exports.saveState,
             getState: exports.getState,
             restoreState: exports.restoreState,
