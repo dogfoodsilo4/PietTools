@@ -94,7 +94,7 @@ var interpreter = (function(exports)
             var a = self.pop(true);
             var b = self.pop(true);
             if (validate(a,b)) {
-                self.push(b - a);
+                self.push(b - a, true);
                 logCmd("subtract", b + "-" + a);
             }
         }
@@ -200,7 +200,7 @@ var interpreter = (function(exports)
                     }
                     _stack[iTop - depth] = top;
                 }
-
+                logCmd("roll", rolls + ":" + depth);
             }
         }
 
