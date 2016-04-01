@@ -13,7 +13,7 @@ ptApp.controller('ptCtrl', ['$scope', 'Data', function ($scope, Data) {
 		$scope.state = {
 	        colour: 1,
 	        dp: 1,
-	        cc: 'left',
+	        cc: 1,
 			lastState: null
 	    };
 		updateState();
@@ -93,6 +93,7 @@ ptApp.controller('ptCtrl', ['$scope', 'Data', function ($scope, Data) {
 
 
 		$scope.state.dp = itpr.DirectionPointer();
+		$scope.state.cc = itpr.CodelChooser();
 
 		updateCommandColours();
 

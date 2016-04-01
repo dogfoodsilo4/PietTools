@@ -272,6 +272,7 @@ var interpreter = (function(exports)
             not: exports.not,
             greater: exports.greater,
             pointer: exports.pointer,
+            switch: exports.switch,
             duplicate: exports.duplicate,
             roll: exports.roll,
             outN: exports.outN,

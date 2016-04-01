@@ -17,7 +17,7 @@
             <div>
                 <input type="textbox" id="input" ng-model="input" />
                 <span ng-repeat="command in data.commands ">
-                    <input type="button" ng-value="command.action" ng-click="action(command);" ng-style="{'border-color': command.colour}" />
+                    <input type="button" ng-value="command.action" ng-click="action(command);" ng-style="{'border-color': command.colour}" ng-attr-title="{{command.description}}" />
                 </span>
 
             </div>
@@ -26,7 +26,7 @@
                 <ul>
                     <li>Colour: <span ng-bind-template="{{state.colour}}"></span></li>
                     <li>DP: <span ng-bind-template="{{state.dp}}"></span></li>
-                    <li>CC: left</li>
+                    <li>CC: <span ng-bind-template="{{state.cc}}"></span></li>
                 </ul>
             </div>
             <div>
